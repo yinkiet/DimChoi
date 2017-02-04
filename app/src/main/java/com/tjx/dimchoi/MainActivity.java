@@ -55,12 +55,10 @@ public class MainActivity extends AppCompatActivity {
                 readQRText.setText("");
                 try {
                     GenerateQRCode generateQRCode = new GenerateQRCode(getApplicationContext());
-                    byte[] byteArray = QRcode.getText().toString().getBytes("UTF-16");
-                    bitmap = generateQRCode.encodeAsBitmap(byteArray.toString());
+                    //byte[] byteArray = QRcode.getText().toString().getBytes("UTF-16");
+                    bitmap = generateQRCode.encodeAsBitmap(QRcode.getText().toString());
                     qrCodeImageview.setImageBitmap(bitmap);
                 } catch (WriterException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
             }
