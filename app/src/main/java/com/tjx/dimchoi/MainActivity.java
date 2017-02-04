@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        qrCodeImageview=(ImageView) findViewById(R.id.qr_code_image);
-
         Button placeOrder = (Button)findViewById(R.id.place_order_btn);
         Button scanQRCode = (Button)findViewById(R.id.scan_qr_code_btn);
 
