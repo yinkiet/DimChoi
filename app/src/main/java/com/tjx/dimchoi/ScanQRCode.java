@@ -19,6 +19,8 @@ public class ScanQRCode extends AppCompatActivity {
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         IntentIntegrator integrator = new IntentIntegrator(ScanQRCode.this);
+        integrator.setCaptureActivity(CaptureActivityAnyOrientation.class);
+        integrator.setOrientationLocked(false);
         integrator.initiateScan();
     }
 
