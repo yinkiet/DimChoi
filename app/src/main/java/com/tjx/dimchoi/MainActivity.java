@@ -59,15 +59,9 @@ public class MainActivity extends AppCompatActivity {
         readQRButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                /*Wait until layout design ready
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), ScanQRCode.class);
-                startActivity(intent);*/
-
-                //Temporary use this
-                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-                integrator.initiateScan();
+                startActivity(intent);
             }
         });
     }
@@ -82,26 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(MainActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
-        }
-    }
-
-    //TO be remove
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (scanningResult != null) {
-            String scanContent = "";
-            String scanFormat = "";
-            if (scanningResult.getContents() != null) {
-                scanContent = scanningResult.getContents().toString();
-                scanFormat = scanningResult.getFormatName().toString();
-            }
-
-            Toast.makeText(this,scanContent+"   type:"+scanFormat,Toast.LENGTH_SHORT).show();
-
-        }else{
-            Toast.makeText(this,"Nothing scanned",Toast.LENGTH_SHORT).show();
         }
     }
 }

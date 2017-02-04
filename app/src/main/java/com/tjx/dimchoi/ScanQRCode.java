@@ -17,6 +17,7 @@ public class ScanQRCode extends AppCompatActivity {
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         IntentIntegrator integrator = new IntentIntegrator(ScanQRCode.this);
         integrator.initiateScan();
     }
@@ -34,9 +35,11 @@ public class ScanQRCode extends AppCompatActivity {
             }
 
             Toast.makeText(this,scanContent+"   type:"+scanFormat,Toast.LENGTH_SHORT).show();
+            finish();
 
         }else{
             Toast.makeText(this,"Nothing scanned",Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 }
