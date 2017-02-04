@@ -18,7 +18,7 @@ import com.google.zxing.common.BitMatrix;
 public class GenerateQRCode extends Application {
 
     public final static int WIDTH=500;
-    private Context context;
+    private final Context context;
     final int version = Build.VERSION.SDK_INT;
 
     public GenerateQRCode(Context context) {

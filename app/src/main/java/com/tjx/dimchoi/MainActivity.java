@@ -1,37 +1,29 @@
 package com.tjx.dimchoi;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.ChecksumException;
-import com.google.zxing.FormatException;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.RGBLuminanceSource;
-import com.google.zxing.Reader;
-import com.google.zxing.Result;
 import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.common.HybridBinarizer;
-import com.google.zxing.datamatrix.DataMatrixReader;
-import com.google.zxing.qrcode.QRCodeReader;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int REQUEST_WRITE_PERMISSION = 20;
+
     ImageView qrCodeImageview;
     EditText QRcode;
     TextView readQRText;
@@ -67,62 +59,49 @@ public class MainActivity extends AppCompatActivity {
         readQRButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                readQRText.setText(readQRCode(bitmap));
 
+                /*Wait until layout design ready
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(), ScanQRCode.class);
+                startActivity(intent);*/
+
+                //Temporary use this
+                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                integrator.initiateScan();
             }
         });
     }
 
-    // this is method call from on create and return bitmap image of QRCode.
-    Bitmap encodeAsBitmap(String str) throws WriterException {
-        BitMatrix result;
-        try {
-            result = new MultiFormatWriter().encode(str,
-                    BarcodeFormat.QR_CODE, WIDTH, WIDTH, null);
-        } catch (IllegalArgumentException iae) {
-            // Unsupported format
-            return null;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_WRITE_PERMISSION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //To-do
+                } else {
+                    Toast.makeText(MainActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                }
         }
-        int w = result.getWidth();
-        int h = result.getHeight();
-        int[] pixels = new int[w * h];
-        for (int y = 0; y < h; y++) {
-            int offset = y * w;
-            for (int x = 0; x < w; x++) {
-                pixels[offset + x] = result.get(x, y) ? getResources().getColor(R.color.black):getResources().getColor(R.color.white);
-            }
-        }
-        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        bitmap.setPixels(pixels, 0, 500, 0, 0, w, h);
-        return bitmap;
     }
 
-    public String readQRCode(Bitmap bitmap) {
-        Result result = null;
+    //TO be remove
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (scanningResult != null) {
+            String scanContent = "";
+            String scanFormat = "";
+            if (scanningResult.getContents() != null) {
+                scanContent = scanningResult.getContents().toString();
+                scanFormat = scanningResult.getFormatName().toString();
+            }
 
-        if (bitmap == null)
-            return null;
+            Toast.makeText(this,scanContent+"   type:"+scanFormat,Toast.LENGTH_SHORT).show();
 
-        int[] intArray = new int[bitmap.getWidth()*bitmap.getHeight()];
-        LuminanceSource source = new RGBLuminanceSource(bitmap.getWidth(), bitmap.getHeight(),intArray);
-
-        BinaryBitmap bitMap = new BinaryBitmap(new HybridBinarizer(source));
-        Reader reader = new DataMatrixReader();
-
-        try {
-            result = reader.decode(bitMap);
-            return result.getText();
-        } catch (NotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ChecksumException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (FormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        }else{
+            Toast.makeText(this,"Nothing scanned",Toast.LENGTH_SHORT).show();
         }
-
-        return null;
     }
 }
