@@ -1,5 +1,6 @@
 package com.tjx.dimchoi;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -53,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 readQRText.setText("");
                 try {
+                    GenerateQRCode generateQRCode = new GenerateQRCode(getApplicationContext());
                     byte[] byteArray = QRcode.getText().toString().getBytes("UTF-16");
-                    bitmap = encodeAsBitmap(Base64.encodeToString(byteArray, Base64.DEFAULT));
+                    bitmap = generateQRCode.encodeAsBitmap(byteArray.toString());
                     qrCodeImageview.setImageBitmap(bitmap);
                 } catch (WriterException e) {
                     e.printStackTrace();
