@@ -16,6 +16,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".PlaceOrder"></activity>
+
         <activity android:name=".ScanQRCode"></activity>
     </application>
 
