@@ -19,6 +19,17 @@
         <activity android:name=".PlaceOrder"></activity>
 
         <activity android:name=".ScanQRCode"></activity>
+
+        <activity android:name=".searchpage.SearchPreview"></activity>
+
+        <activity
+            android:name=".searchpage.DetailActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
         <activity android:name=".CaptureActivityAnyOrientation"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"

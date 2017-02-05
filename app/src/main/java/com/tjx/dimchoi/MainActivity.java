@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.zxing.WriterException;
+import com.tjx.dimchoi.searchpage.SearchPreview;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button placeOrder = (Button)findViewById(R.id.place_order_btn);
+        Button placeOrder = (Button)findViewById(R.id.start_order_btn);
         Button scanQRCode = (Button)findViewById(R.id.scan_qr_code_btn);
 
         placeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PlaceOrder.class);
+                Intent intent = new Intent(getApplicationContext(), SearchPreview.class);
                 startActivity(intent);
             }
         });
