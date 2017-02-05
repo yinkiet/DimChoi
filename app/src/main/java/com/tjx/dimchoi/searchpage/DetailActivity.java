@@ -36,10 +36,12 @@ public class DetailActivity extends AppCompatActivity {
 
         int position = getIntent().getIntExtra(EXTRA_POSITION, 0);
         Resources resources = getResources();
-        String[] places = resources.getStringArray(R.array.places);
+        //String[] places = resources.getStringArray(R.array.places);
+        String[] places = Global.mPlaces;
         collapsingToolbar.setTitle(places[position % places.length]);
 
-        String[] placeDetails = resources.getStringArray(R.array.place_details);
+        //String[] placeDetails = resources.getStringArray(R.array.place_details);
+        String[] placeDetails = Global.mPlaceDesc;
         TextView placeDetail = (TextView) findViewById(R.id.place_detail);
         placeDetail.setText(placeDetails[position % placeDetails.length]);
 
