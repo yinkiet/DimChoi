@@ -1,15 +1,17 @@
 package com.tjx.dimchoi.searchpage;
 
+import android.app.Application;
+
 /**
  * Created by YinKiet on 5/2/2017.
  */
 
-public class Global {
+public class Global extends Application {
 
-    public static int LENGTH = 5;
-    public static String[] mPlaces;
-    public static String[] mPlaceDesc;
-    public static String[] imageID;
+    public int LENGTH = 5;
+    public String[] mPlaces;
+    public String[] mPlaceDesc;
+    public String[] imageID;
 
     public void setLength(int length) {
         this.LENGTH = length;
@@ -31,7 +33,7 @@ public class Global {
         this.mPlaceDesc = mPlaceDesc;
     }
 
-    public String[] getmPlaceDesc() {
+    public String[] getPlaceDesc() {
         return mPlaceDesc;
     }
 

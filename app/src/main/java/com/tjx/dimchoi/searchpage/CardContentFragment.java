@@ -32,6 +32,7 @@ import java.net.URLConnection;
  * Provides UI for the view with Cards.
  */
 public class CardContentFragment extends Fragment {
+    Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -172,7 +173,7 @@ public class CardContentFragment extends Fragment {
 
         private int LENGTH = mPlaces.length;
 
-        Global global = new Global();
+        //Global global = new Global();
 
         public ContentAdapter(Context context) {
             Resources resources = context.getResources();
@@ -185,10 +186,14 @@ public class CardContentFragment extends Fragment {
             }
             a.recycle();*/
 
-            global.setLength(LENGTH);
-            global.setPlace(mPlaces);
-            global.setPlaceDesc(mPlaceDesc);
-            global.setImageID(imageID);
+            ((Global) context.getApplicationContext()).setLength(LENGTH);
+            ((Global) context.getApplicationContext()).setPlace(mPlaces);
+            ((Global) context.getApplicationContext()).setPlaceDesc(mPlaceDesc);
+            ((Global) context.getApplicationContext()).setImageID(imageID);
+//            global.setLength(LENGTH);
+//            global.setPlace(mPlaces);
+//            global.setPlaceDesc(mPlaceDesc);
+//            global.setImageID(imageID);
         }
 
         @Override
@@ -199,14 +204,14 @@ public class CardContentFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             //holder.picture.setImageDrawable(mPlacePictures[position % mPlacePictures.length]);
-            holder.name.setText(global.getPlace()[position % mPlaces.length]);
-            holder.description.setText(global.getmPlaceDesc()[position % mPlaceDesc.length]);
-            holder.url = global.getImageID()[position % imageID.length];
+            holder.name.setText(mPlaces[position % mPlaces.length]);
+            holder.description.setText(mPlaceDesc[position % mPlaceDesc.length]);
+            holder.url = imageID[position % imageID.length];
         }
 
         @Override
         public int getItemCount() {
-            return global.getLength();
+            return LENGTH;
         }
     }
 }
