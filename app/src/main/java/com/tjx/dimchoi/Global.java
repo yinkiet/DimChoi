@@ -1,4 +1,4 @@
-package com.tjx.dimchoi.searchpage;
+package com.tjx.dimchoi;
 
 import android.app.Application;
 

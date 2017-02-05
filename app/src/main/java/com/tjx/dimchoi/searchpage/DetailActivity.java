@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tjx.dimchoi.Global;
 import com.tjx.dimchoi.PlaceOrder;
 import com.tjx.dimchoi.R;
 
