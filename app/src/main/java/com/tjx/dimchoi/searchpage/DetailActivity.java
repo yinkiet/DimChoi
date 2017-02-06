@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.tjx.dimchoi.Global;
 import com.tjx.dimchoi.PlaceOrder;
 import com.tjx.dimchoi.R;
+import com.tjx.dimchoi.ultility.AsyncTaskLoadImage;
 
 /**
  * Provides UI for the Detail page with Collapsing Toolbar.
@@ -50,11 +51,9 @@ public class DetailActivity extends AppCompatActivity {
         TextView placeLocation =  (TextView) findViewById(R.id.place_location);
         placeLocation.setText(placeLocations[position % placeLocations.length]);
 
-        TypedArray placePictures = resources.obtainTypedArray(R.array.places_picture);
+        String[] placePictures = ((Global)this.getApplication()).getImageID();
         ImageView placePicutre = (ImageView) findViewById(R.id.image_view);
-        placePicutre.setImageDrawable(placePictures.getDrawable(position % placePictures.length()));
-
-        placePictures.recycle();
+        new AsyncTaskLoadImage(placePicutre).execute(placePictures[position % placePictures.length]);
 
         Button startOrder = (Button)findViewById(R.id.start_order_btn);
 
