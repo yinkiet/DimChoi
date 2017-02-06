@@ -8,12 +8,15 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
+
 public class AsyncTaskLoadImage  extends AsyncTask<String, String, Bitmap> {
+
     private final static String TAG = "AsyncTaskLoadImage";
     private ImageView imageView;
     public AsyncTaskLoadImage(ImageView imageView) {
         this.imageView = imageView;
     }
+
     @Override
     protected Bitmap doInBackground(String... params) {
         Bitmap bitmap = null;
@@ -25,6 +28,7 @@ public class AsyncTaskLoadImage  extends AsyncTask<String, String, Bitmap> {
         }
         return bitmap;
     }
+
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         imageView.setImageBitmap(bitmap);
