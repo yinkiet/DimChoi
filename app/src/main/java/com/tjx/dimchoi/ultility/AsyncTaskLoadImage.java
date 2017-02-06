@@ -23,8 +23,8 @@ public class AsyncTaskLoadImage  extends AsyncTask<String, String, Bitmap> {
         try {
             URL url = new URL(params[0]);
             bitmap = BitmapFactory.decodeStream((InputStream)url.getContent());
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
+        } catch(IOException e) {
+            Log.e(TAG, "Error: " + e.getMessage());
         }
         return bitmap;
     }

@@ -3,13 +3,14 @@ package com.tjx.dimchoi.searchpage;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.tjx.dimchoi.Global;
 import com.tjx.dimchoi.R;
+import com.tjx.dimchoi.ultility.AsyncTaskLoadImage;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +33,8 @@ import java.net.URLConnection;
  * Provides UI for the view with Cards.
  */
 public class CardContentFragment extends Fragment {
+
+    private final String TAG = "CardContentFragment";
     Context context;
 
     @Override
@@ -47,19 +51,14 @@ public class CardContentFragment extends Fragment {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView picture;
-        public String url;
         public TextView name;
         public TextView description;
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.item_card, parent, false));
 
-            Bitmap bitmap = DownloadImage(url);
-
             picture = (ImageView) itemView.findViewById(R.id.card_image);
             name = (TextView) itemView.findViewById(R.id.card_title);
             description = (TextView) itemView.findViewById(R.id.card_text);
-
-            picture.setImageBitmap(bitmap);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,46 +99,6 @@ public class CardContentFragment extends Fragment {
                 }
             });
         }
-    }
-
-    private InputStream OpenHttpConnection(String urlString) throws IOException {
-        InputStream in = null;
-        int response = -1;
-
-        URL url = new URL(urlString);
-        URLConnection conn = url.openConnection();
-
-        if (!(conn instanceof HttpURLConnection))
-            throw new IOException("Not an HTTP connection");
-
-        try {
-            HttpURLConnection httpConn = (HttpURLConnection) conn;
-            httpConn.setAllowUserInteraction(false);
-            httpConn.setInstanceFollowRedirects(true);
-            httpConn.setRequestMethod("GET");
-            httpConn.connect();
-            response = httpConn.getResponseCode();
-            if (response == HttpURLConnection.HTTP_OK) {
-                in = httpConn.getInputStream();
-            }
-        } catch (Exception ex) {
-            throw new IOException("Error connecting");
-        }
-        return in;
-    }
-
-    private Bitmap DownloadImage(String URL) {
-        Bitmap bitmap = null;
-        InputStream in = null;
-        try {
-            in = OpenHttpConnection(URL);
-            bitmap = BitmapFactory.decodeStream(in);
-            in.close();
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        return bitmap;
     }
 
     /**
@@ -205,7 +164,7 @@ public class CardContentFragment extends Fragment {
             //holder.picture.setImageDrawable(mPlacePictures[position % mPlacePictures.length]);
             holder.name.setText(mPlaces[position % mPlaces.length]);
             holder.description.setText(mPlaceDesc[position % mPlaceDesc.length]);
-            holder.url = imageID[position % imageID.length];
+            new AsyncTaskLoadImage(holder.picture).execute(imageID[position % imageID.length]);
         }
 
         @Override
