@@ -1,4 +1,4 @@
-package com.tjx.dimchoi.HttpConnection;
+package com.tjx.dimchoi.ultility;
 
 import java.io.BufferedReader;
 import java.io.IOException;
