@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.tjx.dimchoi.Global;
@@ -53,9 +54,11 @@ public class CardContentFragment extends Fragment {
         public ImageView picture;
         public TextView name;
         public TextView description;
+        public ProgressBar progressBar;
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.item_card, parent, false));
 
+            progressBar = (ProgressBar) itemView.findViewById(R.id.imageProgressBar);
             picture = (ImageView) itemView.findViewById(R.id.card_image);
             name = (TextView) itemView.findViewById(R.id.card_title);
             description = (TextView) itemView.findViewById(R.id.card_text);
@@ -164,7 +167,7 @@ public class CardContentFragment extends Fragment {
             //holder.picture.setImageDrawable(mPlacePictures[position % mPlacePictures.length]);
             holder.name.setText(mPlaces[position % mPlaces.length]);
             holder.description.setText(mPlaceDesc[position % mPlaceDesc.length]);
-            new AsyncTaskLoadImage(holder.picture).execute(imageID[position % imageID.length]);
+            new AsyncTaskLoadImage(holder.picture, holder.progressBar).execute(imageID[position % imageID.length]);
         }
 
         @Override

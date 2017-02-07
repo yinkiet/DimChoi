@@ -2,7 +2,6 @@ package com.tjx.dimchoi.searchpage;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.tjx.dimchoi.Global;
@@ -53,7 +53,8 @@ public class DetailActivity extends AppCompatActivity {
 
         String[] placePictures = ((Global)this.getApplication()).getImageID();
         ImageView placePicutre = (ImageView) findViewById(R.id.image_view);
-        new AsyncTaskLoadImage(placePicutre).execute(placePictures[position % placePictures.length]);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.imageDetailProgressBar);
+        new AsyncTaskLoadImage(placePicutre, progressBar).execute(placePictures[position % placePictures.length]);
 
         Button startOrder = (Button)findViewById(R.id.start_order_btn);
 

@@ -7,14 +7,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 public class AsyncTaskLoadImage  extends AsyncTask<String, String, Bitmap> {
 
     private final static String TAG = "AsyncTaskLoadImage";
     private ImageView imageView;
-    public AsyncTaskLoadImage(ImageView imageView) {
+    private ProgressBar progressBar;
+    public AsyncTaskLoadImage(ImageView imageView, ProgressBar progressBar) {
         this.imageView = imageView;
+        this.progressBar = progressBar;
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -30,7 +35,13 @@ public class AsyncTaskLoadImage  extends AsyncTask<String, String, Bitmap> {
     }
 
     @Override
+    protected void onPreExecute() {
+
+    }
+
+    @Override
     protected void onPostExecute(Bitmap bitmap) {
         imageView.setImageBitmap(bitmap);
+        progressBar.setVisibility(View.GONE);
     }
 }
