@@ -16,6 +16,7 @@ public class AsyncTaskLoadImage  extends AsyncTask<String, String, Bitmap> {
     private final static String TAG = "AsyncTaskLoadImage";
     private ImageView imageView;
     private ProgressBar progressBar;
+
     public AsyncTaskLoadImage(ImageView imageView, ProgressBar progressBar) {
         this.imageView = imageView;
         this.progressBar = progressBar;
@@ -35,12 +36,15 @@ public class AsyncTaskLoadImage  extends AsyncTask<String, String, Bitmap> {
 
     @Override
     protected void onPreExecute() {
-        progressBar.setVisibility(View.VISIBLE);
+        if (progressBar != null)
+            progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         imageView.setImageBitmap(bitmap);
-        progressBar.setVisibility(View.GONE);
+
+        if (progressBar != null)
+            progressBar.setVisibility(View.GONE);
     }
 }
