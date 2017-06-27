@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... arg0) {
 
             try {
-                URL url = new URL("http://192.168.0.114/dimchoi/index.php"); // here is your URL path
+                URL url = new URL("http://192.168.0.114/dimchoi/result.php"); // here is your URL path
 
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("func", "getcomp");
