@@ -51,4 +51,9 @@
     <attr name="bb_titleTypeFace" format="string" />
     <attr name="bb_showShadow" format="boolean" />
   </declare-styleable>
+
+  <declare-styleable name = "ViewPagerIndicator">
+    <attr name = "itemSize" format = "dimension"/>
+    <attr name = "delimiterSize" format = "dimension"/>
+  </declare-styleable>
 </resources>

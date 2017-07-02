@@ -2,6 +2,8 @@ package dimchoi.com.my.searchpage;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import dimchoi.com.my.ultility.AsyncTaskLoadImage;
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "position";
+    public final String EXTRA_NAME = "name";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,25 +39,25 @@ public class DetailActivity extends AppCompatActivity {
         // Set title of Detail page
         // collapsingToolbar.setTitle(getString(R.string.item_title));
 
-        int position = getIntent().getIntExtra(EXTRA_POSITION, 0);
+        Bundle extras = getIntent().getExtras();
+        byte[] byteArray = extras.getByteArray("picture");
+        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
+        String resName = extras.getString(EXTRA_NAME);
+
+
         Resources resources = getResources();
-        //String[] places = resources.getStringArray(R.array.places);
-        String[] places = ((Global)this.getApplication()).getPlace();
-        collapsingToolbar.setTitle(places[position % places.length]);
 
-        //String[] placeDetails = resources.getStringArray(R.array.place_details);
-        String[] placeDetails = ((Global)this.getApplication()).getPlaceDesc();
+        collapsingToolbar.setTitle(resName);
+
         TextView placeDetail = (TextView) findViewById(R.id.place_detail);
-        placeDetail.setText(placeDetails[position % placeDetails.length]);
+        placeDetail.setText("detail");
 
-        String[] placeLocations = resources.getStringArray(R.array.place_locations);
         TextView placeLocation =  (TextView) findViewById(R.id.place_location);
-        placeLocation.setText(placeLocations[position % placeLocations.length]);
+        placeLocation.setText("location");
 
-        String[] placePictures = ((Global)this.getApplication()).getImageID();
-        ImageView placePicutre = (ImageView) findViewById(R.id.image_view);
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.imageDetailProgressBar);
-        new AsyncTaskLoadImage(placePicutre, progressBar).execute(placePictures[position % placePictures.length]);
+        ImageView placePicture = (ImageView) findViewById(R.id.image_view);
+        placePicture.setImageBitmap(bmp);
 
         Button startOrder = (Button)findViewById(R.id.start_order_btn);
 
