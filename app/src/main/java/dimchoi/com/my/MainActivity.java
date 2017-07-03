@@ -541,8 +541,10 @@ public class MainActivity extends AppCompatActivity {
                 String url = "";
                 if (dataString.equals("1")) {
                     url = "http://103.233.1.196/dimchoi/result.php";
-                } else {
+                } else if(dataString.equals("2")) {
                     url = "http://103.233.1.196/dimchoi/index.php";
+                }else if(dataString.equals("3")) {
+                    url = "http://192.168.0.114/dimchoi/result.php";
                 }
                 new SendPostRequest().execute(url);
             } catch (JSONException e) {
