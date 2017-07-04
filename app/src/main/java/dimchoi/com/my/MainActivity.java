@@ -395,7 +395,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("test", arg0[0]);
                 JSONObject postDataParams = new JSONObject();
-                postDataParams.put("func", "getres");
+                postDataParams.put("func", "getresbyfeature");
                 Log.e("params",postDataParams.toString());
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
